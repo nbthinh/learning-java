@@ -12,3 +12,10 @@
 - @RestController là một chú thích quan trọng trong Spring Boot. Khác với @Controller, nó không trả về một template mà thay vào đó trả về dữ liệu dưới dạng JSON.
 - Khi bạn xây dựng các API, thông tin từ phía client thường được gửi trong phần Body của request dưới dạng JSON.
 - Spring Boot sẽ tự động chuyển đổi chuỗi JSON trong request thành một đối tượng Java. Bạn chỉ cần sử dụng chú thích @RequestBody để cho Spring Boot biết bạn muốn chuyển đổi JSON thành đối tượng Java.
+
+
+# Ghi chú
+
+- Mỗi lần lỗi dependency, debug và đọc lỗi trong sqle
+![Alt text](./error-display-on-sqle.png)
+- Trong trường hợp này, ta gặp phải lỗi không tìm được database. Khắc phục: vào phpmyadmin tạo database cho nó
