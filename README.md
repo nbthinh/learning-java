@@ -19,3 +19,4 @@
 - Mỗi lần lỗi dependency, debug và đọc lỗi trong sqle
 ![Alt text](./error-display-on-sqle.png)
 - Trong trường hợp này, ta gặp phải lỗi không tìm được database. Khắc phục: vào phpmyadmin tạo database cho nó
+- https://viblo.asia/p/java-springboot-spring-data-jpa-1-tong-quan-va-khai-niem-jvElayjDlkw

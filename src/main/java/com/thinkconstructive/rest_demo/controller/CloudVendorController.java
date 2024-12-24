@@ -1,7 +1,10 @@
 package com.thinkconstructive.rest_demo.controller;
 
 import com.thinkconstructive.rest_demo.model.CloudVendor;
+import com.thinkconstructive.rest_demo.service.CloudVendorService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 // @RestController là một chú thích quan trọng trong Spring Boot. Khác với @Controller, nó không trả về một template mà thay vào đó trả về dữ liệu dưới dạng JSON.
@@ -9,32 +12,41 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value="/cloudvendor")
-public class CloudVendorApiService {
+public class CloudVendorController {
+    public CloudVendorController(CloudVendorService cloudVendorService) {
+        this.cloudVendorService = cloudVendorService;
+    }
+
     // GetMapping => Phương thức get
     // GetMapping("{vendorId}") tức là {vendorId} sẽ được append vào url gốc => /cloudvendor/{vendorId}
     // @PathVariable (name = "vendorId") sẽ cho ta lấy giá trị {vendorId} trong url /cloudvendor/{vendorId} và parse nó sang kiểu string
-    CloudVendor cloudVendor;
+    CloudVendorService cloudVendorService;
+
+//    Get specific cloud vendor detail from DB
     @GetMapping("{vendorId}")
     public CloudVendor getCloudVendorDetails(@PathVariable(name = "vendorId") String vendorId) {
 //        return new CloudVendor("C1", "Vendor 1", "Address One", "xxxxxx");
         System.out.println("Phương thức 1 chạy");
         System.out.println(vendorId);
-        return cloudVendor;
+
+        return cloudVendorService.getCloudVendor(vendorId);
+    }
+//    Get all cloud vendors details from DB
+    @GetMapping()
+    public List<CloudVendor> getAllCloudVendorDetails() {
+        return cloudVendorService.getAllCloudVendors();
     }
 
     // RequestBody sẽ tự động chuyển đổi kiểu dữ liệu gửi lên (có thể dạng JSON) sang kiểu dữ liệu object của JAVA, khi đó các properties của json phải cùng tên với các project properties trong object của java
     @PostMapping
     public String createCloudVendorDetails(@RequestBody CloudVendor cloudVendor) {
-        System.out.println("cloudVendor");
-        System.out.println(cloudVendor.getVendorName());
-
-        this.cloudVendor = cloudVendor;
-        return "Cloud Vendor Created";
+        this.cloudVendorService.createCloudVendor(cloudVendor);
+        return "Cloud Vendor Created Successfully";
     }
 
     @PutMapping
     public String updateCloudVendorDetails(@RequestBody CloudVendor cloudVendor) {
-        this.cloudVendor = cloudVendor;
+        this.cloudVendorService.updateCloudVendor(cloudVendor);
         return "Cloud Vendor Updated Successfully";
     }
 
@@ -42,7 +54,7 @@ public class CloudVendorApiService {
     public String deleteCloudVendorDetails(@PathVariable(name="vendorId") String vendorId) {
         System.out.println("vendorId = ");
         System.out.println(vendorId);
-        this.cloudVendor = null;
+        this.cloudVendorService.deleteCloudVendor(vendorId);
         return "Cloud Vendor Deleted Successfully";
     }
 }

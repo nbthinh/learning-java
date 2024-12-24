@@ -5,4 +5,5 @@ spring:
     password: 
 
 # JPA Settings
+  jpa.hibernate.ddl_auto: create
   spring.jpa.database: mysql

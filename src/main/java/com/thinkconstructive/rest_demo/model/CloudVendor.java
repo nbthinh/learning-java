@@ -1,6 +1,17 @@
 package com.thinkconstructive.rest_demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+// Java sẽ tạo bảng: cloud_vendor_info
+@Entity
+@Table(name="cloud_vendor_info")
 public class CloudVendor {
+    // Java sẽ dựa vào các thuộc tính vendorId, vendorName, vendorAddress
+    // và vendorPhoneNumber để tạo các column của table theo các tên
+    // vendor_id, vendor_name, vendor_address và vendor_phone_number
+    @Id
     private String vendorId;
     private String vendorName;
     private String vendorAddress;
