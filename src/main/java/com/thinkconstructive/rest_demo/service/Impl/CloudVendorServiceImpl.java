@@ -1,5 +1,6 @@
 package com.thinkconstructive.rest_demo.service.Impl;
 
+import com.thinkconstructive.rest_demo.exception.CloudVendorNotFoundException;
 import com.thinkconstructive.rest_demo.model.CloudVendor;
 import com.thinkconstructive.rest_demo.repository.CloudVendorRepository;
 import com.thinkconstructive.rest_demo.service.CloudVendorService;
@@ -35,6 +36,9 @@ public class CloudVendorServiceImpl implements CloudVendorService {
 
     @Override
     public CloudVendor getCloudVendor(String cloudVendorId) {
+        if (cloudVendorRepository.findById(cloudVendorId).isEmpty()) {
+            throw new CloudVendorNotFoundException("[Mặc cái quần]Requested cloud vendor does not existed!");
+        }
         return cloudVendorRepository.findById(cloudVendorId).get();
     }
 

@@ -2,10 +2,12 @@ package com.thinkconstructive.rest_demo.controller;
 
 import com.thinkconstructive.rest_demo.model.CloudVendor;
 import com.thinkconstructive.rest_demo.service.CloudVendorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import com.thinkconstructive.rest_demo.response.ResponseHandler;
 
 // @RestController là một chú thích quan trọng trong Spring Boot. Khác với @Controller, nó không trả về một template mà thay vào đó trả về dữ liệu dưới dạng JSON.
 // Các đối tượng được trả về sẽ tự động được Spring Boot chuyển đổi thành JSON. Bạn có thể trả về nhiều loại đối tượng như List, Map, và nó sẽ được chuyển đổi một cách tự động. Spring Boot sử dụng Jackson converter mặc định để thực hiện việc này. Nếu bạn muốn tùy chỉnh kiểu dữ liệu trả về, bạn có thể sử dụng đối tượng ResponseEntity.
@@ -13,23 +15,24 @@ import java.util.List;
 @RestController
 @RequestMapping(value="/cloudvendor")
 public class CloudVendorController {
-    public CloudVendorController(CloudVendorService cloudVendorService) {
-        this.cloudVendorService = cloudVendorService;
-    }
+
 
     // GetMapping => Phương thức get
     // GetMapping("{vendorId}") tức là {vendorId} sẽ được append vào url gốc => /cloudvendor/{vendorId}
     // @PathVariable (name = "vendorId") sẽ cho ta lấy giá trị {vendorId} trong url /cloudvendor/{vendorId} và parse nó sang kiểu string
     CloudVendorService cloudVendorService;
 
+    public CloudVendorController(CloudVendorService cloudVendorService) {
+        this.cloudVendorService = cloudVendorService;
+    }
+
 //    Get specific cloud vendor detail from DB
     @GetMapping("{vendorId}")
-    public CloudVendor getCloudVendorDetails(@PathVariable(name = "vendorId") String vendorId) {
+    public ResponseEntity<Object> getCloudVendorDetails(@PathVariable(name = "vendorId") String vendorId) {
 //        return new CloudVendor("C1", "Vendor 1", "Address One", "xxxxxx");
         System.out.println("Phương thức 1 chạy");
         System.out.println(vendorId);
-
-        return cloudVendorService.getCloudVendor(vendorId);
+        return ResponseHandler.responseBuilder("Given here", HttpStatus.OK, cloudVendorService.getCloudVendor(vendorId));
     }
 //    Get all cloud vendors details from DB
     @GetMapping()
