@@ -18,7 +18,9 @@ public class CloudVendorServiceImpl implements CloudVendorService {
 
     @Override
     public String createCloudVendor(CloudVendor cloudVendor) {
-        cloudVendorRepository.save(cloudVendor);
+        CloudVendor checker = cloudVendorRepository.save(cloudVendor);
+        System.out.println("checker");
+        System.out.println(checker);
         return "Success";
     }
 
